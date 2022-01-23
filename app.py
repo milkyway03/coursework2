@@ -20,16 +20,26 @@ def page_post(post_pk):
     return render_template("post.html", post=post, comments=comments, comments_count=comments_count)
 
 
+# @app.route('/search',)
+# def page_search():
+#     search = request.args.get("s")
+#     found_posts = get_posts_by_word(search)
+#     if len(found_posts) <= 10:
+#         count = len(found_posts)
+#     else:
+#         count = 10
+#         found_posts = found_posts[:10]
+#     return render_template("search.html", found_posts=found_posts, count=count, search=search)
+
 @app.route('/search',)
 def page_search():
-    search = request.args.get("s")
-    found_posts = get_posts_by_word(search)
-    if len(found_posts) <= 10:
-        count = len(found_posts)
-    else:
-        count = 10
-        found_posts = found_posts[:10]
-    return render_template("search.html", found_posts=found_posts, count=count, search=search)
+    key_word = request.args.get("s")
+    found_posts = []
+    if key_word:
+        s = key_word.lower()
+        posts = get_posts_with_comments_count()
+        found_posts = [post for post in posts if s in post.get("content").lower()]
+    return render_template("search.html", found_posts=found_posts)
 
 
 app.run()
