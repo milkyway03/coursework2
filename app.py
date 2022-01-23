@@ -35,6 +35,7 @@ def page_post(post_pk):
 def page_search():
     key_word = request.args.get("s")
     found_posts = []
+    found_posts = found_posts[:10]
     if key_word:
         s = key_word.lower()
         posts = get_posts_with_comments_count()
