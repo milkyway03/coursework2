@@ -19,25 +19,6 @@ def page_post(post_pk):
     return render_template("post.html", post=post, comments=comments, comments_count=comments_count)
 
 
-# @app.route('/search',)
-# def page_search():
-#     search = request.args.get("s")
-#     found_posts = get_posts_by_word(search)
-#     if len(found_posts) <= 10:
-#         count = len(found_posts)
-#     else:
-#         count = 10
-#         found_posts = found_posts[:10]
-#     return render_template("search.html", found_posts=found_posts, count=count, search=search)
-
-# Как нужно сделать:
-#
-# Получить переменную по ключу s
-#
-# Если она есть, сделать поиск по постам с учетом переменной s, иначе (если ее нет), получить список постов
-#
-# Потом по результату сделать срез до 10 и отдать все это в шаблон
-
 @app.route('/search',)
 def page_search():
     key_word = request.args.get("s")
