@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template
-from functions import get_posts_with_comments_count, get_post_by_pk, get_post_comments_by_pk, get_posts_by_word
-
+from functions import get_posts_with_comments_count, get_post_by_pk, get_post_comments_by_pk
 app = Flask(__name__)
 
 
@@ -31,15 +30,25 @@ def page_post(post_pk):
 #         found_posts = found_posts[:10]
 #     return render_template("search.html", found_posts=found_posts, count=count, search=search)
 
+# Как нужно сделать:
+#
+# Получить переменную по ключу s
+#
+# Если она есть, сделать поиск по постам с учетом переменной s, иначе (если ее нет), получить список постов
+#
+# Потом по результату сделать срез до 10 и отдать все это в шаблон
+
 @app.route('/search',)
 def page_search():
     key_word = request.args.get("s")
-    found_posts = []
-    found_posts = found_posts[:10]
     if key_word:
         s = key_word.lower()
         posts = get_posts_with_comments_count()
         found_posts = [post for post in posts if s in post.get("content").lower()]
+    else:
+        return get_posts_with_comments_count()
+
+    found_posts = found_posts[:10]
     return render_template("search.html", found_posts=found_posts)
 
 
